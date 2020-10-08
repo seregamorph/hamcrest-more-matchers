@@ -5,7 +5,7 @@
 
     <groupId>com.github.seregamorph</groupId>
     <artifactId>hamcrest-more-matchers</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <name>hamcrest-more-matchers</name>
     <description>Additional matchers for Hamcrest Library</description>
