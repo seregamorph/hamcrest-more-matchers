@@ -2,10 +2,13 @@ package com.github.seregamorph.hamcrest;
 
 import static com.github.seregamorph.hamcrest.MoreMatchers.where;
 import static com.github.seregamorph.hamcrest.TestLambdaUtils.parseArgumentClasses;
+import static com.github.seregamorph.hamcrest.TestLambdaUtils.unreferenceLambdaConstructor;
 import static com.github.seregamorph.hamcrest.TestLambdaUtils.unreferenceLambdaMethod;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
+import static org.junit.Assert.assertNull;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Locale;
 import lombok.Data;
@@ -166,6 +169,26 @@ public class TestLambdaUtilsTest {
         assertMethod(method, "setDoubleField", double.class);
     }
 
+    @Test
+    public void shouldNotUnreferenceConstuctor() {
+        // new Integer(String)
+        ThrowingFunction<String, Integer> fun = Integer::new;
+
+        val method = unreferenceLambdaMethod(fun);
+
+        assertNull(method);
+    }
+
+    @Test
+    public void shouldUnreferenceFunctionConstuctor() {
+        // new Integer(String)
+        ThrowingFunction<String, Integer> fun = Integer::new;
+
+        val constructor = unreferenceLambdaConstructor(fun);
+
+        assertConstructor(constructor, String.class);
+    }
+
     private void assertMethod(Method method, String name, Class<?>... parameterTypes) {
         assertMethod(method, equalTo(name), parameterTypes);
     }
@@ -173,6 +196,10 @@ public class TestLambdaUtilsTest {
     private void assertMethod(Method method, Matcher<String> nameMatcher, Class<?>... parameterTypes) {
         collector.checkThat(method, where(Method::getName, nameMatcher));
         collector.checkThat(method, where(Method::getParameterTypes, equalTo(parameterTypes)));
+    }
+
+    private void assertConstructor(Constructor<?> constructor, Class<?>... parameterTypes) {
+        collector.checkThat(constructor, where(Constructor::getParameterTypes, equalTo(parameterTypes)));
     }
 
     @Data

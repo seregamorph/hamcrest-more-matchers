@@ -3,6 +3,7 @@ package com.github.seregamorph.hamcrest;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandleInfo;
 import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -43,6 +44,20 @@ public class TestLambdaUtils {
             return Stream.of(cls.getDeclaredMethods())
                     .filter(method -> method.getName().equals(serializedLambda.getImplMethodName())
                             && Arrays.equals(method.getParameterTypes(), argumentClasses))
+                    .findFirst().orElse(null);
+        }
+        return null;
+    }
+
+    @Nullable
+    public static Constructor<?> unreferenceLambdaConstructor(Serializable lambda) {
+        SerializedLambda serializedLambda = getSerializedLambda(lambda);
+        if (serializedLambda != null
+                && (serializedLambda.getImplMethodKind() == MethodHandleInfo.REF_newInvokeSpecial)) {
+            Class<?> cls = implClassForName(serializedLambda.getImplClass());
+            Class<?>[] argumentClasses = parseArgumentClasses(serializedLambda.getImplMethodSignature());
+            return Stream.of(cls.getDeclaredConstructors())
+                    .filter(constructor -> Arrays.equals(constructor.getParameterTypes(), argumentClasses))
                     .findFirst().orElse(null);
         }
         return null;
