@@ -1,6 +1,5 @@
 package com.github.seregamorph.hamcrest;
 
-import static com.github.seregamorph.hamcrest.MoreMatchers.notNull;
 import static com.github.seregamorph.hamcrest.MoreMatchers.predicate;
 import static com.github.seregamorph.hamcrest.MoreMatchers.where;
 import static org.hamcrest.Matchers.allOf;
@@ -10,7 +9,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
@@ -37,13 +35,6 @@ public class MoreMatchersTest {
 
     @Rule
     public final ErrorCollector collector = new ErrorCollector();
-
-    @Test
-    public void checkNotNull() {
-        collector.checkThat(null, not(notNull(equalTo(1))));
-        collector.checkThat(1, notNull(equalTo(1)));
-        collector.checkThat(1, not(notNull(equalTo(1L))));
-    }
 
     @Test
     public void whereShouldGiveReferenceMethodDiagnosticsNotNull() {

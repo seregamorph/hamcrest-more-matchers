@@ -95,7 +95,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionBooleanArgument() {
+    public void shouldUnreferenceBiFunctionBooleanArgument() {
         ThrowingBiConsumer<Pojo, Boolean> fun = Pojo::setBooleanField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -104,7 +104,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionByteArgument() {
+    public void shouldUnreferenceBiFunctionByteArgument() {
         ThrowingBiFunction<Pojo, Byte, Pojo> fun = Pojo::setByteField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -113,7 +113,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionCharArgument() {
+    public void shouldUnreferenceBiFunctionCharArgument() {
         ThrowingBiFunction<Pojo, Character, Pojo> fun = Pojo::setCharField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -122,7 +122,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionShortArgument() {
+    public void shouldUnreferenceBiFunctionShortArgument() {
         ThrowingBiFunction<Pojo, Short, Pojo> fun = Pojo::setShortField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -131,7 +131,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionIntArgument() {
+    public void shouldUnreferenceBiFunctionIntArgument() {
         ThrowingBiFunction<Pojo, Integer, Pojo> fun = Pojo::setIntField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -140,7 +140,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionLongArgument() {
+    public void shouldUnreferenceBiFunctionLongArgument() {
         ThrowingBiFunction<Pojo, Long, Pojo> fun = Pojo::setLongField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -149,7 +149,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionFloatArgument() {
+    public void shouldUnreferenceBiFunctionFloatArgument() {
         ThrowingBiFunction<Pojo, Float, Pojo> fun = Pojo::setFloatField;
 
         val method = unreferenceLambdaMethod(fun);
@@ -158,7 +158,7 @@ public class TestLambdaUtilsTest {
     }
 
     @Test
-    public void shouldUnreferenceFunctionDoubleArgument() {
+    public void shouldUnreferenceBiFunctionDoubleArgument() {
         ThrowingBiFunction<Pojo, Double, Pojo> fun = Pojo::setDoubleField;
 
         val method = unreferenceLambdaMethod(fun);
