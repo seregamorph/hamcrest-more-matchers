@@ -3,6 +3,7 @@ package com.github.seregamorph.hamcrest;
 import static com.github.seregamorph.hamcrest.OrderMatchers.softOrdered;
 import static com.github.seregamorph.hamcrest.OrderMatchers.strictOrdered;
 import static java.util.Collections.singleton;
+import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertThat;
@@ -60,13 +61,20 @@ public class OrderMatchersTest {
 
     @Test
     public void nestedCollectionShouldMatchOrderedItem() {
-        List<List<Integer>> nested = Arrays.asList(
+        List<Iterable<Integer>> nested = Arrays.asList(
                 Arrays.asList(3, 2, 1),
                 Arrays.asList(1, 2, 3)
         );
 
-        assertThat(nested, hasItem(softOrdered()));
         assertThat(nested, hasItem(strictOrdered()));
+        assertThat(nested, hasItem(softOrdered()));
+    }
+
+    @Test
+    public void stringsShouldMatchOrderByLength() {
+        List<String> list = Arrays.asList("abc", "ab", "a");
+
+        assertThat(list, strictOrdered(comparing(String::length).reversed()));
     }
 
 }

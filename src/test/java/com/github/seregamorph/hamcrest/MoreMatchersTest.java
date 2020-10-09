@@ -4,10 +4,12 @@ import static com.github.seregamorph.hamcrest.MoreMatchers.notNull;
 import static com.github.seregamorph.hamcrest.MoreMatchers.predicate;
 import static com.github.seregamorph.hamcrest.MoreMatchers.where;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
@@ -24,7 +26,6 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
-@SuppressWarnings("UnpredictableBigDecimalConstructorCall")
 public class MoreMatchersTest {
 
     private static final String ARGUMENT = "str";
@@ -115,6 +116,34 @@ public class MoreMatchersTest {
         expectedException.expectMessage(FAIL_MESSAGE);
 
         collector.checkThat(ARGUMENT, predicate(str -> str.length() != ARGUMENT.length(), FAIL_MESSAGE));
+    }
+
+    @Test
+    public void containsShouldMatchWhere() {
+        List<SamplePojo> list = Arrays.asList(
+                new SamplePojo().setName("foo"),
+                new SamplePojo().setName("bar")
+        );
+
+        assertThat(list, contains(
+                where(SamplePojo::getName, is("foo")),
+                where(SamplePojo::getName, is("bar"))
+        ));
+    }
+
+    @Test
+    public void containsShouldNotMatchWhere() {
+        expectedException.expect(AssertionError.class);
+
+        List<SamplePojo> list = Arrays.asList(
+                new SamplePojo().setName("wrong"),
+                new SamplePojo().setName("bar")
+        );
+
+        assertThat(list, contains(
+                where(SamplePojo::getName, is("foo")),
+                where(SamplePojo::getName, is("bar"))
+        ));
     }
 
     @Data
