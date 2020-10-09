@@ -1,5 +1,6 @@
 package com.github.seregamorph.hamcrest;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.function.Predicate;
 import org.hamcrest.Description;
@@ -48,11 +49,17 @@ public class MoreMatchers {
                         .appendDescriptionOf(matcher);
 
                 Method methodReference = TestLambdaUtils.unreferenceLambdaMethod(extractor);
-                if (methodReference == null) {
-                    description.appendText(" after being extracted");
-                } else {
+                if (methodReference != null) {
                     String shortDescription = TestLambdaUtils.getMethodShortReference(methodReference);
                     description.appendText(" after call " + shortDescription);
+                } else {
+                    Constructor<?> constructorReference = TestLambdaUtils.unreferenceLambdaConstructor(extractor);
+                    if (constructorReference != null) {
+                        String shortDescription = TestLambdaUtils.getMethodShortReference(constructorReference);
+                        description.appendText(" after call " + shortDescription);
+                    } else {
+                        description.appendText(" after being extracted");
+                    }
                 }
             }
         };

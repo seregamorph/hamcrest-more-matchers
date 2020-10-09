@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javassist.ClassPool;
 import javassist.CtClass;
@@ -78,6 +79,14 @@ public class TestLambdaUtils {
         }
         // probably it is method reference
         return method.getDeclaringClass().getSimpleName() + "." + method.getName();
+    }
+
+    static String getMethodShortReference(Constructor<?> constructor) {
+        String parameterTypeNames = Stream.of(constructor.getParameterTypes())
+                .map(Class::getSimpleName)
+                .collect(Collectors.joining(", "));
+        return constructor.getDeclaringClass().getSimpleName()
+                + "(" + parameterTypeNames + ")";
     }
 
     /**

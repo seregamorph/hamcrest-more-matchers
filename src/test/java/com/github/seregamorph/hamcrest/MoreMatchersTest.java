@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -135,6 +136,17 @@ public class MoreMatchersTest {
                 where(SamplePojo::getName, is("foo")),
                 where(SamplePojo::getName, is("bar"))
         ));
+    }
+
+    @Test
+    public void shouldMatchConstructorExtractor() {
+        expectedException.expect(AssertionError.class);
+        expectedException.expectMessage("Expected: every item is Object that matches a value greater than <5> after call Integer(String)\n"
+                + "     but: an item <1> was less than <5>");
+
+        List<String> list = Arrays.asList("1", "10");
+
+        collector.checkThat(list, everyItem(where(Integer::new, greaterThan(5))));
     }
 
     @Data
