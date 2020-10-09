@@ -1,6 +1,6 @@
 # Additional matchers for Hamcrest Library
 
-## Where (when, having) expression
+## "Where" (a.k.a. "when") extracting expression
 Accepts a function that extracts the value to be matched via passed matcher. May be convenient to use in nested expressions like collection hasItem matching and also for null safety. Also in case of mismatch it gives diagnostics if the extraction function was a method reference. For example:
 ```java
 @Test
@@ -65,3 +65,19 @@ public void nestedCollectionShouldMatchOrderedItem() {
     assertThat(nested, hasItem(strictOrdered()));
 }
 ```
+
+## How to use the library
+Library is available on [Maven Central](https://search.maven.org/artifact/com.github.seregamorph/hamcrest-more-matchers), you can add it in Maven
+```xml
+<dependency>
+    <groupId>com.github.seregamorph</groupId>
+    <artifactId>hamcrest-more-matchers</artifactId>
+    <version>0.1</version>
+    <scope>test</scope>
+</dependency>
+```
+or Gradle
+```
+testImplementation "com.github.seregamorph:hamcrest-more-matchers:0.1"
+```
+
