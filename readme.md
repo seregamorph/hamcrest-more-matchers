@@ -3,6 +3,8 @@
 ## "Where" (a.k.a. "when") extracting expression
 Accepts a function that extracts the value to be matched via passed matcher. May be convenient to use in nested expressions like collection hasItem matching and also for null safety. Also in case of mismatch it gives diagnostics if the extraction function was a method reference. For example:
 ```java
+import static com.github.seregamorph.hamcrest.MoreMatchers.where;
+
 @Test
 public void whereShouldFindMatchingItem() {
     List<SamplePojo> list = Arrays.asList(
@@ -40,6 +42,8 @@ The method reference resolution works fine in Java 8 and Java 11.
 There are two matchers that validate that the given iterable: `strictOrdered()` (does not allow equal elements in sequence) and `softOrdered()` (allows equal elements in sequence).
 
 ```java
+import static com.github.seregamorph.hamcrest.OrderMatchers.*;
+
 @Test
 public void softOrderedEqualShouldSuccess() {
     // success
@@ -64,6 +68,12 @@ public void nestedCollectionShouldMatchOrderedItem() {
     assertThat(nested, hasItem(softOrdered()));
     assertThat(nested, hasItem(strictOrdered()));
 }
+```
+It is also [MockMvc](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/testing.html#spring-mvc-test-server) friendly
+```java
+mockMvc.perform(get("/api/v3/array-ordered-by-id-endpoint"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[*].id", strictOrdered()));
 ```
 
 ## How to use the library
