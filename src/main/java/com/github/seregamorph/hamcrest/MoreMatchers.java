@@ -8,6 +8,11 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.function.Predicate;
 
+/**
+ * Additional matchers for hamcrest.
+ *
+ * @author seregamorph
+ */
 public class MoreMatchers {
 
     /**

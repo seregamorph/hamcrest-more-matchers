@@ -1,14 +1,20 @@
 package com.github.seregamorph.hamcrest;
 
-import static java.util.Comparator.naturalOrder;
-
-import java.util.Comparator;
-import java.util.Iterator;
-import javax.annotation.Nullable;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import javax.annotation.Nullable;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import static java.util.Comparator.naturalOrder;
+
+/**
+ * Additional matchers for hamcrest to validate collection sort (ordering).
+ *
+ * @author seregamorph
+ */
 public class OrderMatchers {
 
     /**
@@ -17,7 +23,7 @@ public class OrderMatchers {
      * @param comparator comparator to use
      */
     public static <T> Matcher<Iterable<T>> strictOrdered(Comparator<? super T> comparator,
-                                                                   String comparatorDescription) {
+                                                         String comparatorDescription) {
         return ordered(comparator, false, comparatorDescription);
     }
 

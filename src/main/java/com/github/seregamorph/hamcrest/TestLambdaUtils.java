@@ -12,14 +12,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Lambda method reference to method or constructor resolvers.
+ *
+ * @author seregamorph
+ */
 public class TestLambdaUtils {
 
     /**
      * Runtime lambda resolver. If the Function is a simple lambda method reference
      * (e.g. `UserPojo::getName`), it returns the method itself (`UserPojo.getName()`).
      * Original source code found here
-     * https://habr.com/ru/post/311788/
+     * https://habr.com/ru/post/522774/
      * Related topics and projects:
+     * https://habr.com/ru/post/311788/
      * https://github.com/cronn-de/reflection-util
      * https://github.com/jhalterman/typetools
      * https://github.com/Hervian/safety-mirror
