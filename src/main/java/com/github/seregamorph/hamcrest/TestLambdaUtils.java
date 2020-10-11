@@ -1,5 +1,6 @@
 package com.github.seregamorph.hamcrest;
 
+import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.lang.invoke.MethodHandleInfo;
 import java.lang.invoke.SerializedLambda;
@@ -9,12 +10,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javassist.ClassPool;
-import javassist.CtClass;
-import javassist.CtMethod;
-import javax.annotation.Nullable;
 
 public class TestLambdaUtils {
 
@@ -30,6 +26,7 @@ public class TestLambdaUtils {
      * https://stackoverflow.com/questions/19845213
      * https://stackoverflow.com/questions/21860875
      *
+     * @see ThrowingFunction
      * @param lambda method reference. It should be {@link Serializable} - this way it can be converted to
      *               {@link SerializedLambda} to extract method signatures
      * @return method reference
@@ -62,31 +59,6 @@ public class TestLambdaUtils {
                     .findFirst().orElse(null);
         }
         return null;
-    }
-
-    static String getMethodShortReference(Method method) {
-        try {
-            if (method.isSynthetic()) {
-                // probably it is classic lambda
-                ClassPool pool = ClassPool.getDefault();
-                CtClass ctClass = pool.get(method.getDeclaringClass().getCanonicalName());
-                CtMethod ctMethod = ctClass.getDeclaredMethod(method.getName());
-                int lineNumber = ctMethod.getMethodInfo().getLineNumber(0);
-                return ctClass.getClassFile().getSourceFile() + ":" + lineNumber;
-            }
-        } catch (NoClassDefFoundError | Exception ignore) {
-            // NoClassDefFoundError (missing javassist dependency), javassist.NotFoundException
-        }
-        // probably it is method reference
-        return method.getDeclaringClass().getSimpleName() + "." + method.getName();
-    }
-
-    static String getMethodShortReference(Constructor<?> constructor) {
-        String parameterTypeNames = Stream.of(constructor.getParameterTypes())
-                .map(Class::getSimpleName)
-                .collect(Collectors.joining(", "));
-        return constructor.getDeclaringClass().getSimpleName()
-                + "(" + parameterTypeNames + ")";
     }
 
     /**
