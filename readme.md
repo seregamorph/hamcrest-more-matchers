@@ -26,7 +26,7 @@ public void whereShouldFindMatchingItem() {
 public class SamplePojo {
     private String name;
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
@@ -36,7 +36,7 @@ public class SamplePojo {
     }
 }
 ```
-The method reference resolution works fine in Java 8 and Java 11.
+The method reference resolution works fine in Java 8, 11 and 17.
 
 # Collection order (sort) matchers
 There are two matchers that validate that the given iterable: `strictOrdered()` (does not allow equal elements in sequence) and `softOrdered()` (allows equal elements in sequence).
@@ -48,7 +48,7 @@ import static com.github.seregamorph.hamcrest.OrderMatchers.*;
 public void softOrderedEqualShouldSuccess() {
     // success
     assertThat(Arrays.asList(1, 1, 2), softOrdered());
-    // fails with diagnostics
+    // fails with diagnostics:
     // java.lang.AssertionError: 
     // Expected: Strictly ordered by natural comparator
     //     but: Found equal elements 1 and 1
@@ -58,6 +58,9 @@ public void softOrderedEqualShouldSuccess() {
 
 Or it can be nested:
 ```java
+import static com.github.seregamorph.hamcrest.OrderMatchers.*;
+import static org.hamcrest.Matchers.*;
+
 @Test
 public void nestedCollectionShouldMatchOrderedItem() {
     List<List<Integer>> nested = Arrays.asList(
@@ -67,7 +70,14 @@ public void nestedCollectionShouldMatchOrderedItem() {
 
     assertThat(nested, hasItem(softOrdered()));
     assertThat(nested, hasItem(strictOrdered()));
+    // fails with diagnostics:
+    // java.lang.AssertionError: 
+    // Expected: every item is Strictly ordered by natural comparator
+    //     but: an item Found unordered elements 3 and 2
+
+    assertThat(nested, everyItem(strictOrdered()));
 }
+
 ```
 It is also [MockMvc](https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/testing.html#spring-mvc-test-server) friendly
 ```java
