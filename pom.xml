@@ -18,7 +18,7 @@
         <maven.compiler.testSource>17</maven.compiler.testSource>
         <maven.compiler.testTarget>17</maven.compiler.testTarget>
 
-        <hamcrest.version>2.2</hamcrest.version>
+        <hamcrest.version>3.0</hamcrest.version>
         <findbugs.version>3.0.0</findbugs.version>
         <javassist.version>3.24.0-GA</javassist.version>
         <junit.version>4.13.2</junit.version>
@@ -75,6 +75,12 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
