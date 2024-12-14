@@ -92,12 +92,12 @@ Library is available on [Maven Central](https://search.maven.org/artifact/com.gi
 <dependency>
     <groupId>com.github.seregamorph</groupId>
     <artifactId>hamcrest-more-matchers</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
     <scope>test</scope>
 </dependency>
 ```
 or Gradle
 ```
-testImplementation "com.github.seregamorph:hamcrest-more-matchers:0.1"
+testImplementation("com.github.seregamorph:hamcrest-more-matchers:1.0")
 ```
 
