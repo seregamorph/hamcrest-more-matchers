@@ -1,5 +1,13 @@
 package com.github.seregamorph.hamcrest;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ErrorCollector;
+import org.junit.rules.ExpectedException;
+
+import java.util.Arrays;
+import java.util.List;
+
 import static com.github.seregamorph.hamcrest.MoreMatchers.predicate;
 import static com.github.seregamorph.hamcrest.MoreMatchers.where;
 import static org.hamcrest.Matchers.allOf;
@@ -14,16 +22,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
-
-import java.util.Arrays;
-import java.util.List;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.val;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ErrorCollector;
-import org.junit.rules.ExpectedException;
 
 public class MoreMatchersTest {
 
@@ -43,7 +41,7 @@ public class MoreMatchersTest {
         expectedException.expectMessage("Expected: Object that matches not null after call SamplePojo.getName\n"
                 + "     but: was null");
 
-        val user = new SamplePojo();
+        var user = new SamplePojo();
         collector.checkThat(user, where(SamplePojo::getName, notNullValue()));
     }
 
@@ -80,7 +78,7 @@ public class MoreMatchersTest {
                 endsWith("\n     but: was null")
         ));
 
-        val pojo = new SamplePojo();
+        var pojo = new SamplePojo();
         collector.checkThat(pojo, where(sample -> {
             return sample.getName();
         }, notNullValue()));
@@ -92,7 +90,7 @@ public class MoreMatchersTest {
         expectedException.expectMessage("Expected: Object that matches null after call SamplePojo.getName\n"
                 + "     but: was \"value\"");
 
-        val user = new SamplePojo()
+        var user = new SamplePojo()
                 .setName("value");
         collector.checkThat(user, where(SamplePojo::getName, nullValue()));
     }
@@ -149,10 +147,17 @@ public class MoreMatchersTest {
         collector.checkThat(list, everyItem(where(Integer::new, greaterThan(5))));
     }
 
-    @Data
-    @Accessors(chain = true)
     private static class SamplePojo {
 
         private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public SamplePojo setName(String name) {
+            this.name = name;
+            return this;
+        }
     }
 }
