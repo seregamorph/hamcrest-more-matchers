@@ -1,3 +1,6 @@
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.github.seregamorph/hamcrest-more-matchers?style=flat-square)](https://central.sonatype.com/artifact/com.github.seregamorph/hamcrest-more-matchers/overview)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 # Additional matchers for Hamcrest Library
 
 ## "Where" (a.k.a. "when") extracting expression
